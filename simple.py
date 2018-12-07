@@ -15,7 +15,7 @@ ns = api.namespace('items', description='Item operations')
 
 item = api.model('Item', {
     'id': fields.Integer(readOnly=True, description='The item unique identifier'),
-    'title': fields.String(required=True, description='The item title'),
+    'name': fields.String(required=True, description='The item title'),
     'description': fields.String(required=True, description='The item description'),
     'src': fields.String(required=True, description='The item image url')
 })
@@ -49,9 +49,9 @@ class ItemDAO(object):
 
 
 DAO = ItemDAO()
-DAO.create({'task': 'Build an API'})
-DAO.create({'task': '?????'})
-DAO.create({'task': 'profit!'})
+DAO.create({'name': 'Build an API'})
+DAO.create({'name': '?????'})
+DAO.create({'name': 'profit!'})
 
 
 @ns.route('/')
