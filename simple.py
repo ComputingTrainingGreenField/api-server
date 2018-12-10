@@ -3,6 +3,7 @@ from flask_restplus import Api, Resource, fields
 from werkzeug.contrib.fixers import ProxyFix
 from werkzeug.datastructures import FileStorage
 import os
+import json
 
 
 app = Flask(__name__)
@@ -47,11 +48,13 @@ class ItemDAO(object):
         item = self.get(id)
         self.items.remove(item)
 
+    def load(self, filepath):
+        with open(filepath, "r") as items_file:
+            self.items = json.load(items_file)
+
 
 DAO = ItemDAO()
-DAO.create({'name': 'Build an API'})
-DAO.create({'name': '?????'})
-DAO.create({'name': 'profit!'})
+DAO.load("items.json")
 
 
 @ns.route('/')
