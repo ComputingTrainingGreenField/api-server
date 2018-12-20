@@ -6,7 +6,7 @@ import os
 import json
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.wsgi_app = ProxyFix(app.wsgi_app)
 api = Api(app, version='1.0', title='ItemMVC API',
     description='A simple ItemMVC API',
@@ -115,5 +115,10 @@ class Upload(Resource):
         return {'url': url}, 201
 
 
+@api.route('/files/<path:path>')
+def send_file(path):
+    return app.send_static_file(path)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
