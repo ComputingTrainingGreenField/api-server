@@ -109,7 +109,7 @@ class Upload(Resource):
     def post(self):
         args = upload_parser.parse_args() # upload a file
         uploaded_file = args['file']  # This is FileStorage instance
-        file_path = os.path.join('/home/ubuntu/api-server/files', uploaded_file.filename)
+        file_path = os.path.join('/home/ubuntu/api-server/static', uploaded_file.filename)
         uploaded_file.save(file_path)
         url = url_for('static', filename=uploaded_file.filename)
         return {'url': url}, 201
