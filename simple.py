@@ -4,6 +4,8 @@ from werkzeug.contrib.fixers import ProxyFix
 from werkzeug.datastructures import FileStorage
 import os
 import json
+from flask import Flask, Response, request
+import pprint
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -112,6 +114,8 @@ class Upload(Resource):
         file_path = os.path.join('/home/ubuntu/api-server/static', uploaded_file.filename)
         uploaded_file.save(file_path)
         url = url_for('static', filename=uploaded_file.filename)
+        str = pprint.pformat(request.environ, depth=5)
+        print str
         return {'url': url}, 201
 
 
