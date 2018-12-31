@@ -24,6 +24,9 @@ item = api.model('Item', {
 })
 
 
+DATA_FILENAME = "items.json"
+
+
 class ItemDAO(object):
     def __init__(self):
         self.counter = 0
@@ -44,19 +47,25 @@ class ItemDAO(object):
     def update(self, id, data):
         item = self.get(id)
         item.update(data)
+        self.save()
         return item
 
     def delete(self, id):
         item = self.get(id)
         self.items.remove(item)
+        self.save()
 
-    def load(self, filepath):
-        with open(filepath, "r") as items_file:
+    def load(self):
+        with open(DATA_FILENAME, "r") as items_file:
             self.items = json.load(items_file)
+
+    def save(self):
+        with open(DATA_FILENAME, "w") as items_file:
+            json.dump(self.items, items_file)
 
 
 DAO = ItemDAO()
-DAO.load("items.json")
+DAO.load()
 
 
 @ns.route('/')
